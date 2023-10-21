@@ -6,12 +6,12 @@
 /*   By: kyusulee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:23:00 by kyusulee          #+#    #+#             */
-/*   Updated: 2023/10/21 17:36:01 by kyusulee         ###   ########.fr       */
+/*   Updated: 2023/10/21 17:44:27 by kyusulee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_BONUS_H
-# define GET_NEXT_LINE_BONUS_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
 # include <stdlib.h>
 # include <unistd.h>
