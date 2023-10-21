@@ -6,7 +6,7 @@
 /*   By: kyusulee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:22:36 by kyusulee          #+#    #+#             */
-/*   Updated: 2023/10/21 17:54:00 by kyusulee         ###   ########.fr       */
+/*   Updated: 2023/10/21 19:45:07 by kyusulee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,11 @@
 
 int	ft_lstset_end(t_lst *lst)
 {
-	size_t	i;
-
-	i = lst->end;
-	while (i < lst->len)
+	while (lst->end < lst->len - 1)
 	{
-		if (lst->str[i] == '\n')
-		{
-			lst->end = i;
+		if (lst->str[lst->end] == '\n')
 			return (0);
-		}
-		++i;
+		++(lst->end);
 	}
 	return (-1);
 }
@@ -35,7 +29,7 @@ char	*make_str_from_lst(t_lst *lst)
 	size_t	i;
 	size_t	len;
 
-	if (lst->end == lst->bgn)
+	if (lst->end == lst->len)
 		return (NULL);
 	len = lst->end - lst->bgn + 1;
 	str = (char *)malloc(sizeof(char) * (len + 1));
@@ -47,7 +41,8 @@ char	*make_str_from_lst(t_lst *lst)
 		str[i] = lst->str[lst->bgn + i];
 		++i;
 	}
-	str[len - 1] = '\n';
+	if (lst->str[lst->end] == '\n')
+		str[len - 1] = '\n';
 	str[len] = '\0';
 	lst->end = lst->end + 1;
 	lst->bgn = lst->end;
@@ -74,7 +69,7 @@ char	*read_str_from_fd(t_lst **lst, t_lst *now, int fd)
 			break ;
 	}
 	free(buf);
-	if (rt_val == -1)
+	if (rt_val == -1 || now->str == NULL)
 		return (ft_lstdel_one(lst, fd));
 	return (make_str_from_lst(now));
 }

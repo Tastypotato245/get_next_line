@@ -6,7 +6,7 @@
 /*   By: kyusulee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:22:52 by kyusulee          #+#    #+#             */
-/*   Updated: 2023/10/21 17:58:18 by kyusulee         ###   ########.fr       */
+/*   Updated: 2023/10/21 19:20:58 by kyusulee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ int	ft_lstcap_up(t_lst *lst, size_t new_cap)
 		new_str[i] = lst->str[i];
 		++i;
 	}
-	free(lst->str);
+	if (lst->str != NULL)
+		free(lst->str);
 	lst->str = new_str;
 	lst->cap = new_cap;
 	return (0);
