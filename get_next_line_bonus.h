@@ -6,7 +6,7 @@
 /*   By: kyusulee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:23:00 by kyusulee          #+#    #+#             */
-/*   Updated: 2023/10/21 15:27:53 by kyusulee         ###   ########.fr       */
+/*   Updated: 2023/10/21 16:13:58 by kyusulee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdio.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024
@@ -32,7 +33,7 @@ typedef struct s_lst
 }				t_lst;
 
 int		ft_lstnewadd_front(t_lst **lst, int fd);
-t_lst	*ft_lstfind_lst(const t_lst *lst, int fd);
+t_lst	*ft_lstfind_lst(t_lst *lst, int fd);
 int		ft_lstcap_up(t_lst *lst, size_t new_cap);
 int		ft_lstclear(t_lst *lst);
 int		ft_lstappend_str(t_lst *lst, char *buf, size_t len);

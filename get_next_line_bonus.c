@@ -6,7 +6,7 @@
 /*   By: kyusulee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:22:36 by kyusulee          #+#    #+#             */
-/*   Updated: 2023/10/21 15:28:32 by kyusulee         ###   ########.fr       */
+/*   Updated: 2023/10/21 16:13:43 by kyusulee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_lstset_end(t_lst *lst)
 	i = lst->end;
 	while (i < lst->len)
 	{
-		if (lst->[i] == '\n')
+		if (lst->str[i] == '\n')
 		{
 			lst->end = i;
 			return (0);
@@ -35,7 +35,7 @@ char	*make_str_from_lst(t_lst *lst)
 	size_t	i;
 	size_t	len;
 
-	len = lst->end - lst->bgn;
+	len = lst->end - lst->bgn + 1;
 	str = (char *)malloc(sizeof(char) * (len + 1));
 	if (!str)
 		return (NULL);
@@ -48,6 +48,7 @@ char	*make_str_from_lst(t_lst *lst)
 	str[len] = '\0';
 	lst->end = lst->end + 1;
 	lst->bgn = lst->end;
+	ft_lstset_end(lst);
 	return (str);
 }
 
@@ -60,15 +61,21 @@ char	*read_str_from_fd(t_lst *lst, int fd)
 	if (lst == NULL)
 		if (ft_lstnewadd_front(&lst, fd) != 0)
 			return (NULL);
+	buf = (char *)malloc(sizeof(char) * BUFFER_SIZE);
+	if (!buf)
+		return (NULL);
 	rt_val = 0;
 	while (rt_val != -1)
 	{
 		rt_val = read(fd, buf, BUFFER_SIZE);
+		if (rt_val == -1)
+			break ;
 		if (ft_lstappend_str(lst, buf, rt_val) != 0)
-			break;
-		if (ft_lstset_end(lst) == 0)
-			break;	
+			break ;
+		if (lst->str[lst->end] == '\n')
+			break ;
 	}
+	free(buf);
 	return (make_str_from_lst(lst));
 }
 
