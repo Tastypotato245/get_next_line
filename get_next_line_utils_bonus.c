@@ -6,7 +6,7 @@
 /*   By: kyusulee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:22:52 by kyusulee          #+#    #+#             */
-/*   Updated: 2023/10/21 18:48:04 by kyusulee         ###   ########.fr       */
+/*   Updated: 2023/10/21 21:24:33 by kyusulee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,20 @@ t_lst	*ft_lstfind_lst(t_lst *lst, int fd)
 	return (NULL);
 }
 
-int	ft_lstcap_up(t_lst *lst, size_t new_cap)
+int	ft_lstcap_change(t_lst *lst, size_t new_cap)
 {
 	size_t	i;
 	char	*new_str;
 
-	if (!lst || lst->cap > new_cap)
+	if (!lst)
 		return (-1);
 	new_str = (char *)malloc(sizeof(char) * new_cap);
 	if (!new_str)
+	{
+		free(lst->str);
+		lst->str = NULL;
 		return (-2);
+	}
 	i = 0;
 	while (i < lst->len)
 	{
@@ -108,9 +112,9 @@ int	ft_lstappend_str(t_lst *lst, char *buf, size_t len)
 	if (lst->len + len > lst->cap)
 	{
 		if (lst->len + len > lst->cap * 2)
-			rt = ft_lstcap_up(lst, lst->len + len);
+			rt = ft_lstcap_change(lst, lst->len + len);
 		else
-			rt = ft_lstcap_up(lst, lst->cap * 2);
+			rt = ft_lstcap_change(lst, lst->cap * 2);
 		if (rt != 0)
 			return (rt);
 	}
