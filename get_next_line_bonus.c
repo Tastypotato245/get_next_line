@@ -6,7 +6,7 @@
 /*   By: kyusulee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:22:36 by kyusulee          #+#    #+#             */
-/*   Updated: 2023/10/21 16:13:43 by kyusulee         ###   ########.fr       */
+/*   Updated: 2023/10/21 17:14:12 by kyusulee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ char	*make_str_from_lst(t_lst *lst)
 		str[i] = lst->str[lst->bgn + i];
 		++i;
 	}
+	str[len - 1] = '\n';
 	str[len] = '\0';
 	lst->end = lst->end + 1;
 	lst->bgn = lst->end;
@@ -52,38 +53,50 @@ char	*make_str_from_lst(t_lst *lst)
 	return (str);
 }
 
-char	*read_str_from_fd(t_lst *lst, int fd)
+char	*read_str_from_fd(t_lst *now, int fd)
 {
 	ssize_t	rt_val;
 	char	*buf;
 
-	lst = ft_lstfind_lst(lst, fd);
-	if (lst == NULL)
-		if (ft_lstnewadd_front(&lst, fd) != 0)
-			return (NULL);
 	buf = (char *)malloc(sizeof(char) * BUFFER_SIZE);
 	if (!buf)
 		return (NULL);
-	rt_val = 0;
-	while (rt_val != -1)
+	while (1)
 	{
 		rt_val = read(fd, buf, BUFFER_SIZE);
-		if (rt_val == -1)
+		if (rt_val == 0 || rt_val == -1)
 			break ;
-		if (ft_lstappend_str(lst, buf, rt_val) != 0)
+		if (ft_lstappend_str(now, buf, rt_val) != 0)
 			break ;
-		if (lst->str[lst->end] == '\n')
+		if (now->str[now->end] == '\n')
 			break ;
 	}
 	free(buf);
-	return (make_str_from_lst(lst));
+	return (make_str_from_lst(now));
 }
 
 char	*get_next_line(int fd)
 {
 	static t_lst	*lst;
+	t_lst			*now;
 
 	if (fd < 0 || BUFFER_SIZE < 0)
 		return (NULL);
-	return (read_str_from_fd(lst, fd));
+	if (lst == NULL)
+	{
+		if(ft_lstnewadd_front(&lst, fd) != 0)
+			return (NULL);
+		now = lst;
+	}
+	else
+	{
+		now = ft_lstfind_lst(lst, fd);
+		if (now == NULL)
+		{
+			if (ft_lstnewadd_front(&lst, fd) != 0)
+				return (NULL);
+			now = lst;
+		}
+	}
+	return (read_str_from_fd(now, fd));
 }

@@ -6,7 +6,7 @@
 /*   By: kyusulee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:23:00 by kyusulee          #+#    #+#             */
-/*   Updated: 2023/10/21 16:13:58 by kyusulee         ###   ########.fr       */
+/*   Updated: 2023/10/21 16:46:22 by kyusulee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int		ft_lstclear(t_lst *lst);
 int		ft_lstappend_str(t_lst *lst, char *buf, size_t len);
 int		ft_lstset_end(t_lst *lst);
 char	*make_str_from_lst(t_lst *lst);
-char	*read_str_from_fd(t_lst *lst, int fd);
+char	*read_str_from_fd(t_lst *now, int fd);
 char	*get_next_line(int fd);
 
 #endif

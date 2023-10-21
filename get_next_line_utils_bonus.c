@@ -6,7 +6,7 @@
 /*   By: kyusulee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:22:52 by kyusulee          #+#    #+#             */
-/*   Updated: 2023/10/21 16:06:13 by kyusulee         ###   ########.fr       */
+/*   Updated: 2023/10/21 17:13:16 by kyusulee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,9 @@ int	ft_lstappend_str(t_lst *lst, char *buf, size_t len)
 			rt = ft_lstcap_up(lst, lst->len + len);
 		else
 			rt = ft_lstcap_up(lst, lst->cap * 2);
+		if (rt != 0)
+			return (rt);
 	}
-	if (rt != 0)
-		return (rt);
 	i = 0;
 	while (i < len)
 	{
